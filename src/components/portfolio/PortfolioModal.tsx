@@ -50,9 +50,15 @@ export const PortfolioModal: React.FC<PortfolioModalProps> = ({
       updateDoc(doc(db, 'portfolios', portfolio.id), {
         views: increment(1)
       });
+
+      // Award points to portfolio creator for view (occasionally)
+      if (portfolio.creatorId !== currentUser.uid) {
+        pointsSystem.awardViewPoints(portfolio.creatorId);
+      }
+
       setHasViewed(true);
     }
-  }, [isOpen, hasViewed, portfolio.id]);
+  }, [isOpen, hasViewed, portfolio.id, portfolio.creatorId, currentUser.uid]);
 
   useEffect(() => {
     if (!isOpen) return;
