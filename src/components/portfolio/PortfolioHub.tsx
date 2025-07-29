@@ -35,12 +35,10 @@ export const PortfolioHub: React.FC<PortfolioHubProps> = ({ user, userRole }) =>
   const [filter, setFilter] = useState<'all' | 'active' | 'trending'>('active');
 
   useEffect(() => {
-    const now = Timestamp.now();
+    // Simplified query to avoid index requirements
     const q = query(
       collection(db, 'portfolios'),
       where('status', '==', 'active'),
-      where('expiresAt', '>', now),
-      orderBy('expiresAt'),
       orderBy('createdAt', 'desc')
     );
 
