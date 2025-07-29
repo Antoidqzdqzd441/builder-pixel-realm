@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { User } from 'firebase/auth';
 import { UserRole } from '../../hooks/useAuth';
 import { Portfolio } from './PortfolioHub';
-import { collection, query, where, orderBy, onSnapshot, addDoc, updateDoc, doc, increment, serverTimestamp } from 'firebase/firestore';
+import { collection, query, where, orderBy, onSnapshot, updateDoc, doc, increment } from 'firebase/firestore';
 import { db } from '../../services/firebase';
 import { CommentsList } from './CommentsList';
+import { useCommentModeration } from '../../hooks/useCommentModeration';
 
 interface Comment {
   id: string;
@@ -38,6 +39,9 @@ export const PortfolioModal: React.FC<PortfolioModalProps> = ({
   const [isLiked, setIsLiked] = useState(false);
   const [submittingComment, setSubmittingComment] = useState(false);
   const [hasViewed, setHasViewed] = useState(false);
+  const [commentSubmissionStatus, setCommentSubmissionStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const { submitComment } = useCommentModeration();
 
   useEffect(() => {
     if (isOpen && !hasViewed) {
@@ -89,22 +93,31 @@ export const PortfolioModal: React.FC<PortfolioModalProps> = ({
     if (!newComment.trim() || submittingComment) return;
 
     setSubmittingComment(true);
+    setCommentSubmissionStatus('idle');
     
     try {
-      // Add comment to Firestore - will be moderated by AI
-      await addDoc(collection(db, 'comments'), {
-        portfolioId: portfolio.id,
-        authorId: currentUser.uid,
-        authorName: currentUserRole.displayName,
-        authorRole: currentUserRole.role,
-        content: newComment.trim(),
-        createdAt: serverTimestamp(),
-        status: 'pending' // Will be updated by AI moderation
-      });
+      const result = await submitComment(
+        portfolio.id,
+        currentUser.uid,
+        currentUserRole.displayName,
+        currentUserRole.role,
+        newComment.trim()
+      );
       
-      setNewComment('');
+      if (result.success) {
+        setNewComment('');
+        setCommentSubmissionStatus('success');
+        
+        // Hide success message after 3 seconds
+        setTimeout(() => {
+          setCommentSubmissionStatus('idle');
+        }, 3000);
+      } else {
+        setCommentSubmissionStatus('error');
+      }
     } catch (error) {
       console.error('Error submitting comment:', error);
+      setCommentSubmissionStatus('error');
     } finally {
       setSubmittingComment(false);
     }
@@ -244,20 +257,59 @@ export const PortfolioModal: React.FC<PortfolioModalProps> = ({
                     Commentaires ({comments.length})
                   </h3>
                   
+                  {/* Comment Status Messages */}
+                  <AnimatePresence>
+                    {commentSubmissionStatus === 'success' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="bg-green-500/20 border border-green-500/30 rounded-lg p-3 mb-4"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <span className="text-green-400">✅</span>
+                          <p className="text-green-200 text-sm">
+                            Commentaire envoyé ! Il sera visible après modération par notre IA.
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                    
+                    {commentSubmissionStatus === 'error' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="bg-red-500/20 border border-red-500/30 rounded-lg p-3 mb-4"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <span className="text-red-400">❌</span>
+                          <p className="text-red-200 text-sm">
+                            Erreur lors de l'envoi du commentaire. Veuillez réessayer.
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  
                   {/* Add Comment Form */}
                   <form onSubmit={handleSubmitComment} className="space-y-3">
                     <textarea
                       value={newComment}
                       onChange={(e) => setNewComment(e.target.value)}
-                      placeholder="Partagez votre avis sur ce portfolio..."
+                      placeholder="Partagez votre avis sur ce portfolio... (modéré par IA)"
                       className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-400 resize-none"
                       rows={3}
                       maxLength={500}
+                      disabled={submittingComment}
                     />
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-400">
-                        {newComment.length}/500 caractères
-                      </span>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs text-gray-400">
+                          {newComment.length}/500 caractères
+                        </span>
+                        <span className="text-xs text-purple-300">🤖 Modération IA</span>
+                      </div>
                       <button
                         type="submit"
                         disabled={!newComment.trim() || submittingComment}
@@ -267,6 +319,10 @@ export const PortfolioModal: React.FC<PortfolioModalProps> = ({
                       </button>
                     </div>
                   </form>
+                  
+                  <div className="mt-3 text-xs text-gray-500">
+                    💡 Les commentaires sont automatiquement modérés par notre IA pour maintenir un environnement respectueux.
+                  </div>
                 </div>
 
                 {/* Comments List */}
