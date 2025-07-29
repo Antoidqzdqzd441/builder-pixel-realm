@@ -45,6 +45,37 @@ export const useAuth = () => {
       }
     });
 
+    // Check for redirect result on app load
+    const checkRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result?.user) {
+          // Handle redirect result (same logic as popup)
+          const userDoc = await getDoc(doc(db, 'users', result.user.uid));
+
+          if (!userDoc.exists()) {
+            const userData: UserRole = {
+              role: 'member',
+              points: 25,
+              credits: 0,
+              displayName: result.user.displayName || 'User',
+              description: '',
+              photoURL: result.user.photoURL || '',
+              createdAt: new Date()
+            };
+
+            await setDoc(doc(db, 'users', result.user.uid), {
+              ...userData,
+              createdAt: serverTimestamp()
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Error handling redirect result:', error);
+      }
+    };
+
+    checkRedirectResult();
     return () => unsubscribe();
   }, []);
 
