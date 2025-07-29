@@ -15,16 +15,16 @@ export const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <Navbar 
+    <div className="min-h-screen" style={{ backgroundColor: '#0A0A0B' }}>
+      <Navbar
         user={user}
         userRole={userRole}
         currentView={currentView}
         onViewChange={setCurrentView}
         onLogout={logout}
       />
-      
-      <main className="pt-16">
+
+      <main>
         {currentView === 'hub' && <PortfolioHub user={user} userRole={userRole} />}
         {currentView === 'shop' && (
           <div className="container mx-auto px-4 py-8">
