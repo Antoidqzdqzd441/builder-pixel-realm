@@ -23,29 +23,29 @@ export const Navbar: React.FC<NavbarProps> = ({
       case 'founder':
         return {
           gradient: 'from-yellow-400 to-amber-500',
-          textColor: 'text-yellow-100',
-          bgColor: 'bg-gradient-to-r from-yellow-500/20 to-amber-600/20',
-          borderColor: 'border-yellow-400/30',
-          icon: '👑',
-          title: 'Fondateur'
+          textColor: 'text-yellow-200',
+          bgColor: 'bg-yellow-500/10',
+          borderColor: 'border-yellow-400/20',
+          title: 'Founder',
+          dotColor: 'bg-yellow-400'
         };
       case 'admin':
         return {
           gradient: 'from-blue-400 to-indigo-500',
-          textColor: 'text-blue-100',
-          bgColor: 'bg-gradient-to-r from-blue-500/20 to-indigo-600/20',
-          borderColor: 'border-blue-400/30',
-          icon: '⚡',
-          title: 'Admin'
+          textColor: 'text-blue-200',
+          bgColor: 'bg-blue-500/10',
+          borderColor: 'border-blue-400/20',
+          title: 'Admin',
+          dotColor: 'bg-blue-400'
         };
       default:
         return {
-          gradient: 'from-emerald-400 to-teal-500',
-          textColor: 'text-emerald-100',
-          bgColor: 'bg-gradient-to-r from-emerald-500/20 to-teal-600/20',
-          borderColor: 'border-emerald-400/30',
-          icon: '💎',
-          title: 'Membre'
+          gradient: 'from-slate-400 to-slate-500',
+          textColor: 'text-slate-200',
+          bgColor: 'bg-slate-500/10',
+          borderColor: 'border-slate-400/20',
+          title: 'Member',
+          dotColor: 'bg-slate-400'
         };
     }
   };
