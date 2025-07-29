@@ -22,20 +22,26 @@ export const useCommentModeration = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Listen to pending comments for manual review
+    // Listen to pending comments for manual review - simplified query
     const q = query(
       collection(db, 'comments'),
-      where('status', '==', 'pending'),
-      orderBy('createdAt', 'desc')
+      where('status', '==', 'pending')
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const comments = snapshot.docs.map(doc => ({
+      const allComments = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       })) as Comment[];
-      
-      setPendingComments(comments);
+
+      // Sort by creation date on client side (newest first)
+      const sortedComments = allComments.sort((a, b) => {
+        const aTime = a.createdAt?.toDate?.()?.getTime() || 0;
+        const bTime = b.createdAt?.toDate?.()?.getTime() || 0;
+        return bTime - aTime;
+      });
+
+      setPendingComments(sortedComments);
       setLoading(false);
     });
 
