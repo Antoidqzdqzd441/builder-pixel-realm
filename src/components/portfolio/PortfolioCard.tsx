@@ -106,27 +106,26 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
         </div>
 
         {/* Content */}
-        <div className="p-6 relative">
+        <div className="p-4 relative">
           {/* Title */}
-          <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 leading-tight group-hover:text-purple-300 transition-colors duration-300">
+          <h3 className="text-lg font-semibold text-white mb-2 line-clamp-1">
             {portfolio.title}
           </h3>
-          
+
           {/* Description */}
-          <p className="text-gray-300 text-sm mb-4 line-clamp-3 leading-relaxed">
+          <p className="text-gray-400 text-sm mb-3 line-clamp-2">
             {portfolio.description}
           </p>
 
           {/* Creator Info */}
-          <div className="flex items-center space-x-3 mb-4">
-            <div className={`w-12 h-12 bg-gradient-to-r ${roleDesign.gradient} rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
+          <div className="flex items-center space-x-2 mb-3">
+            <div className={`w-8 h-8 bg-gradient-to-r ${roleDesign.gradient} rounded-lg flex items-center justify-center text-white font-medium text-sm`}>
               {portfolio.creatorName.charAt(0).toUpperCase()}
             </div>
             <div>
-              <div className="text-white font-semibold text-sm">{portfolio.creatorName}</div>
-              <div className={`text-xs ${roleDesign.textColor} flex items-center space-x-1`}>
-                <span>{roleDesign.icon}</span>
-                <span className="font-medium">{roleDesign.title}</span>
+              <div className="text-white font-medium text-sm">{portfolio.creatorName}</div>
+              <div className={`text-xs ${roleDesign.textColor}`}>
+                {roleDesign.title}
               </div>
             </div>
           </div>
