@@ -26,6 +26,7 @@ export const useAuth = () => {
     userRole: null,
     loading: true
   });
+  const [useDevelopmentMode, setUseDevelopmentMode] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
