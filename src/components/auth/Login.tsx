@@ -12,7 +12,7 @@ export const Login: React.FC<LoginProps> = ({ onToggleMode }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
-  const { signInWithEmail, signInWithGoogle } = useAuth();
+  const { signInWithEmail, signInWithGoogle, signInWithGoogleRedirect } = useAuth();
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
