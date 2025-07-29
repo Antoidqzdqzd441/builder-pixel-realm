@@ -124,68 +124,46 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* User Info */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             {/* Credits and Points Display */}
-            <div className="flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-3 border border-white/20">
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="text-center"
-              >
-                <div className="text-xs text-blue-400 font-medium mb-1">Points</div>
-                <div className="text-lg font-bold text-white flex items-center space-x-1">
-                  <span>🪙</span>
-                  <span>{userRole.points}</span>
-                </div>
-              </motion.div>
-              
-              <div className="w-px h-8 bg-white/20"></div>
-              
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="text-center"
-              >
-                <div className="text-xs text-green-400 font-medium mb-1">Crédits</div>
-                <div className="text-lg font-bold text-white flex items-center space-x-1">
-                  <span>💎</span>
-                  <span>{userRole.credits}</span>
-                </div>
-              </motion.div>
+            <div className="flex items-center space-x-3 text-sm">
+              <div className="text-gray-300">
+                <span className="text-blue-400">{userRole.points}p</span>
+              </div>
+              <div className="text-gray-300">
+                <span className="text-green-400">{userRole.credits}c</span>
+              </div>
             </div>
 
             {/* User Profile */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
               <div className="text-right">
-                <div className="flex items-center space-x-2 mb-1">
-                  <span className="text-sm font-semibold text-white">{userRole.displayName}</span>
-                  <div className={`${roleDesign.bgColor} ${roleDesign.borderColor} border rounded-lg px-2 py-1`}>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-white">{userRole.displayName}</span>
+                  <div className={`${roleDesign.bgColor} ${roleDesign.borderColor} border rounded px-2 py-1`}>
                     <div className={`flex items-center space-x-1 ${roleDesign.textColor}`}>
-                      <span className="text-xs">{roleDesign.icon}</span>
-                      <span className="text-xs font-bold">{roleDesign.title}</span>
+                      <div className={`w-1.5 h-1.5 ${roleDesign.dotColor} rounded-full`}></div>
+                      <span className="text-xs">{roleDesign.title}</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               {user.photoURL && (
-                <motion.img
-                  whileHover={{ scale: 1.1 }}
+                <img
                   src={user.photoURL}
                   alt="Profile"
-                  className="w-12 h-12 rounded-2xl border-2 border-white/20 shadow-lg"
+                  className="w-8 h-8 rounded-lg border border-white/20"
                 />
               )}
 
-              <motion.button
-                whileHover={{ scale: 1.1, rotate: 180 }}
-                whileTap={{ scale: 0.95 }}
+              <button
                 onClick={onLogout}
-                className="w-10 h-10 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 rounded-xl flex items-center justify-center text-red-400 hover:text-red-300 transition-all duration-300"
-                title="Déconnexion"
+                className="w-8 h-8 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 rounded-lg flex items-center justify-center text-red-400 hover:text-red-300 transition-colors text-sm"
+                title="Logout"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
-              </motion.button>
+                ✕
+              </button>
             </div>
           </div>
         </div>
