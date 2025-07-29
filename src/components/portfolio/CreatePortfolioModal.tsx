@@ -128,16 +128,37 @@ export const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
             </div>
 
             {/* Credits Info */}
-            <div className="bg-purple-500/20 border border-purple-500/30 rounded-lg p-4 mb-6">
+            <div className={`border rounded-lg p-4 mb-6 ${
+              userRole.credits === 0
+                ? 'bg-red-500/20 border-red-500/30'
+                : 'bg-purple-500/20 border-purple-500/30'
+            }`}>
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-white font-medium">Vos crédits disponibles</h3>
-                  <p className="text-purple-300 text-sm">
-                    1 crédit = 1 heure de visibilité sur le hub
+                  <h3 className="text-white font-medium">
+                    {userRole.credits === 0 ? 'Aucun crédit disponible' : 'Vos crédits disponibles'}
+                  </h3>
+                  <p className={`text-sm ${
+                    userRole.credits === 0 ? 'text-red-300' : 'text-purple-300'
+                  }`}>
+                    {userRole.credits === 0
+                      ? 'Achetez des crédits dans la boutique pour publier !'
+                      : '1 crédit = 1 heure de visibilité sur le hub'
+                    }
                   </p>
                 </div>
-                <div className="text-2xl font-bold text-white">
-                  {userRole.credits} 💎
+                <div className="flex items-center space-x-3">
+                  <div className="text-2xl font-bold text-white">
+                    {userRole.credits} 💎
+                  </div>
+                  {userRole.credits === 0 && userRole.points >= 5 && (
+                    <button
+                      onClick={onClose}
+                      className="bg-yellow-600 hover:bg-yellow-700 text-white text-sm px-3 py-2 rounded-lg transition-colors"
+                    >
+                      🛒 Boutique
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
