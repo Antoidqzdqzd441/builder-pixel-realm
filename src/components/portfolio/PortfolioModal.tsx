@@ -7,6 +7,7 @@ import { collection, query, where, orderBy, onSnapshot, updateDoc, doc, incremen
 import { db } from '../../services/firebase';
 import { CommentsList } from './CommentsList';
 import { useCommentModeration } from '../../hooks/useCommentModeration';
+import { pointsSystem } from '../../services/pointsSystem';
 
 interface Comment {
   id: string;
