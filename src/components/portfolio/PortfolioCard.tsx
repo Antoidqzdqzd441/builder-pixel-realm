@@ -56,8 +56,8 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
   const roleDesign = getRoleDesign(portfolio.creatorRole);
 
   const formatTimeRemaining = (timeStr: string) => {
-    if (timeStr === 'Expiré') return '⏰ Expiré';
-    return `⏳ ${timeStr}`;
+    if (timeStr === 'Expiré') return 'Expired';
+    return timeStr;
   };
 
   return (
