@@ -14,7 +14,7 @@ interface AdminPanelProps {
 }
 
 export const AdminPanel: React.FC<AdminPanelProps> = ({ user, userRole }) => {
-  const [activeTab, setActiveTab] = useState<'users' | 'portfolios' | 'maintenance'>('users');
+  const [activeTab, setActiveTab] = useState<'utilisateurs' | 'portfolios' | 'maintenance' | 'points'>('utilisateurs');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authForm, setAuthForm] = useState({ email: '', password: '' });
   const [authError, setAuthError] = useState('');
@@ -62,7 +62,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ user, userRole }) => {
     if (authForm.email === ADMIN_EMAIL && authForm.password === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
     } else {
-      setAuthError('Invalid credentials');
+      setAuthError('Identifiants invalides');
     }
   };
 
@@ -81,9 +81,9 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ user, userRole }) => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
               </div>
-              <h2 className="text-xl font-bold text-white mb-2">Admin Access</h2>
+              <h2 className="text-xl font-bold text-white mb-2">Accès Administrateur</h2>
               <p className="text-gray-400 text-sm">
-                Administrative authentication required
+                Authentification administrative requise
               </p>
             </div>
 
@@ -110,7 +110,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ user, userRole }) => {
             <form onSubmit={handleAuth} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Admin Email
+                  Email Administrateur
                 </label>
                 <input
                   type="email"
@@ -124,7 +124,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ user, userRole }) => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Admin Password
+                  Mot de Passe Administrateur
                 </label>
                 <input
                   type="password"
@@ -140,13 +140,13 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ user, userRole }) => {
                 type="submit"
                 className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-md transition-colors"
               >
-                Authenticate
+                S'Authentifier
               </button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-xs text-gray-500">
-                Restricted access • Admin privileges required
+                Accès restreint • Privilèges administrateur requis
               </p>
             </div>
           </motion.div>
@@ -156,8 +156,9 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ user, userRole }) => {
   }
 
   const tabs = [
-    { id: 'users', label: 'Users', icon: 'users' },
+    { id: 'utilisateurs', label: 'Utilisateurs', icon: 'users' },
     { id: 'portfolios', label: 'Portfolios', icon: 'briefcase' },
+    { id: 'points', label: 'Gestion Points', icon: 'gift' },
     ...(userRole.role === 'founder' ? [{ id: 'maintenance', label: 'Maintenance', icon: 'settings' }] : [])
   ];
 
@@ -170,15 +171,21 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ user, userRole }) => {
           <div className="py-8">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-white tracking-tight">Admin Panel</h1>
+                <h1 className="text-2xl font-bold text-white tracking-tight">Panneau d'Administration</h1>
                 <p className="text-gray-400 text-sm mt-1">
-                  {userRole.role === 'founder' ? 'Founder Access' : 'Administrator Access'}
+                  {userRole.role === 'founder' ? 'Accès Fondateur' : 'Accès Administrateur'}
                 </p>
               </div>
               
               <div className="flex items-center space-x-2 text-sm">
-                <span className="text-gray-400">Authenticated as:</span>
+                <span className="text-gray-400">Connecté en tant que:</span>
                 <span className="text-white font-medium">{ADMIN_EMAIL}</span>
+                <button
+                  onClick={() => setIsAuthenticated(false)}
+                  className="ml-4 text-red-400 hover:text-red-300 text-sm font-medium"
+                >
+                  Déconnexion
+                </button>
               </div>
             </div>
           </div>
@@ -186,17 +193,17 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ user, userRole }) => {
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
             {[
-              { label: 'Total Users', value: stats.totalUsers, color: 'blue' },
-              { label: 'Active Portfolios', value: stats.activePortfolios, color: 'emerald' },
-              { label: 'Total Portfolios', value: stats.totalPortfolios, color: 'indigo' },
-              { label: 'Pending Comments', value: stats.pendingComments, color: 'amber' }
+              { label: 'Utilisateurs Total', value: stats.totalUsers, color: 'blue' },
+              { label: 'Portfolios Actifs', value: stats.activePortfolios, color: 'emerald' },
+              { label: 'Portfolios Total', value: stats.totalPortfolios, color: 'indigo' },
+              { label: 'Commentaires en Attente', value: stats.pendingComments, color: 'amber' }
             ].map((stat, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white/5 rounded-lg p-6 border border-white/8"
+                className="bg-white/5 rounded-lg p-6 border border-white/8 hover:bg-white/8 transition-colors cursor-pointer"
               >
                 <div className="text-gray-400 text-sm mb-1">{stat.label}</div>
                 <div className={`text-2xl font-bold text-${stat.color}-400 font-mono`}>{stat.value}</div>
@@ -223,8 +230,9 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ user, userRole }) => {
 
           {/* Tab Content */}
           <div className="pb-8">
-            {activeTab === 'users' && <UserManagement userRole={userRole} />}
+            {activeTab === 'utilisateurs' && <UserManagement userRole={userRole} />}
             {activeTab === 'portfolios' && <PortfolioManagement userRole={userRole} />}
+            {activeTab === 'points' && <PointsManagement userRole={userRole} />}
             {activeTab === 'maintenance' && userRole.role === 'founder' && (
               <MaintenanceMode userRole={userRole} />
             )}
