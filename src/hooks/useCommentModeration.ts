@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, query, where, onSnapshot, addDoc, updateDoc, doc, serverTimestamp, orderBy } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, addDoc, updateDoc, doc, getDoc, serverTimestamp, orderBy } from 'firebase/firestore';
 import { db } from '../services/firebase';
 import { aiModeration } from '../services/aiModeration';
 import { pointsSystem } from '../services/pointsSystem';
