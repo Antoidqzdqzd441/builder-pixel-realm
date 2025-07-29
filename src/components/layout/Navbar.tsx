@@ -117,25 +117,21 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* User Info */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 w-48 justify-end">
             {/* Credits and Points Display */}
-            <div className="flex items-center space-x-3 text-sm">
-              <div className="text-gray-300">
-                <span className="text-blue-400">{userRole.points}p</span>
-              </div>
-              <div className="text-gray-300">
-                <span className="text-green-400">{userRole.credits}c</span>
-              </div>
+            <div className="flex items-center space-x-2 text-xs">
+              <span className="text-blue-400">{userRole.points}p</span>
+              <span className="text-green-400">{userRole.credits}c</span>
             </div>
 
             {/* User Profile */}
             <div className="flex items-center space-x-2">
               <div className="text-right">
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-white">{userRole.displayName}</span>
-                  <div className={`${roleDesign.bgColor} ${roleDesign.borderColor} border rounded px-2 py-1`}>
+                <div className="flex items-center space-x-1">
+                  <span className="text-xs text-white">{userRole.displayName}</span>
+                  <div className={`${roleDesign.bgColor} ${roleDesign.borderColor} border rounded px-1 py-0.5`}>
                     <div className={`flex items-center space-x-1 ${roleDesign.textColor}`}>
-                      <div className={`w-1.5 h-1.5 ${roleDesign.dotColor} rounded-full`}></div>
+                      <div className={`w-1 h-1 ${roleDesign.dotColor} rounded-full`}></div>
                       <span className="text-xs">{roleDesign.title}</span>
                     </div>
                   </div>
@@ -146,13 +142,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <img
                   src={user.photoURL}
                   alt="Profile"
-                  className="w-8 h-8 rounded-lg border border-white/20"
+                  className="w-6 h-6 rounded border border-white/20"
                 />
               )}
 
               <button
                 onClick={onLogout}
-                className="w-8 h-8 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 rounded-lg flex items-center justify-center text-red-400 hover:text-red-300 transition-colors text-sm"
+                className="w-6 h-6 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 rounded flex items-center justify-center text-red-400 hover:text-red-300 transition-colors text-xs"
                 title="Logout"
               >
                 ✕
