@@ -88,32 +88,21 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           
           {/* Timer Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-white/20"
-          >
-            <div className="text-white text-sm font-semibold flex items-center space-x-1">
-              <span className="text-xs">⏱️</span>
-              <span>{formatTimeRemaining(remainingTime)}</span>
+          <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm rounded-md px-2 py-1">
+            <div className="text-white text-xs font-medium">
+              {formatTimeRemaining(remainingTime)}
             </div>
-          </motion.div>
+          </div>
 
           {/* Role Badge */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 }}
-            className="absolute top-4 left-4"
-          >
-            <div className={`${roleDesign.bgColor} ${roleDesign.borderColor} border backdrop-blur-sm rounded-xl px-3 py-2 ${roleDesign.glow} shadow-lg`}>
-              <div className={`flex items-center space-x-2 ${roleDesign.textColor}`}>
-                <span className="text-sm">{roleDesign.icon}</span>
-                <span className="text-xs font-bold uppercase tracking-wider">{roleDesign.title}</span>
+          <div className="absolute top-2 left-2">
+            <div className={`${roleDesign.bgColor} ${roleDesign.borderColor} border backdrop-blur-sm rounded-md px-2 py-1`}>
+              <div className={`flex items-center space-x-1 ${roleDesign.textColor}`}>
+                <div className={`w-2 h-2 ${roleDesign.dotColor} rounded-full`}></div>
+                <span className="text-xs font-medium">{roleDesign.title}</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Content */}
