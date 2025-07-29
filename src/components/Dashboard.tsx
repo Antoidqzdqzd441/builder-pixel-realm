@@ -35,13 +35,10 @@ export const Dashboard: React.FC = () => {
           <AdminPanel user={user} userRole={userRole} />
         )}
         {currentView === 'profile' && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="container mx-auto px-4 py-8"
-          >
-            <div className="max-w-2xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
-              <h2 className="text-2xl font-bold text-white mb-6">Mon Profil</h2>
+          <div className="pt-14 px-6">
+            <div className="max-w-2xl mx-auto py-8">
+              <div className="bg-white/5 backdrop-blur-sm rounded-lg p-8 border border-white/8">
+                <h2 className="text-2xl font-bold text-white mb-6 tracking-tight">Profile</h2>
               
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
@@ -66,22 +63,23 @@ export const Dashboard: React.FC = () => {
                 )}
                 
                 <div className="grid grid-cols-3 gap-4">
-                  <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg p-4 text-center">
-                    <div className="text-2xl font-bold text-white">{userRole.points}</div>
-                    <div className="text-sm text-gray-300">Points</div>
+                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 text-center">
+                    <div className="text-2xl font-bold text-blue-400 font-mono">{userRole.points}</div>
+                    <div className="text-sm text-gray-400">Points</div>
                   </div>
-                  <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-lg p-4 text-center">
-                    <div className="text-2xl font-bold text-white">{userRole.credits}</div>
-                    <div className="text-sm text-gray-300">Crédits</div>
+                  <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4 text-center">
+                    <div className="text-2xl font-bold text-emerald-400 font-mono">{userRole.credits}</div>
+                    <div className="text-sm text-gray-400">Credits</div>
                   </div>
-                  <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg p-4 text-center">
-                    <div className="text-2xl font-bold text-white capitalize">{userRole.role}</div>
-                    <div className="text-sm text-gray-300">Rôle</div>
+                  <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-lg p-4 text-center">
+                    <div className="text-2xl font-bold text-indigo-400 capitalize">{userRole.role}</div>
+                    <div className="text-sm text-gray-400">Role</div>
                   </div>
                 </div>
               </div>
+              </div>
             </div>
-          </motion.div>
+          </div>
         )}
       </main>
     </div>
