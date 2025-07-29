@@ -45,12 +45,19 @@ export const PortfolioHub: React.FC<PortfolioHubProps> = ({ user, userRole }) =>
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const portfolioData = snapshot.docs.map(doc => ({
+      const now = Date.now();
+      const allPortfolios = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       })) as Portfolio[];
-      
-      setPortfolios(portfolioData);
+
+      // Filter expired portfolios on the client side
+      const activePortfolios = allPortfolios.filter(portfolio => {
+        const expiryTime = portfolio.expiresAt.toDate().getTime();
+        return expiryTime > now;
+      });
+
+      setPortfolios(activePortfolios);
       setLoading(false);
     });
 
