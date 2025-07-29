@@ -6,8 +6,8 @@ import { UserRole } from '../../hooks/useAuth';
 interface NavbarProps {
   user: User;
   userRole: UserRole;
-  currentView: 'hub' | 'admin' | 'profile';
-  onViewChange: (view: 'hub' | 'admin' | 'profile') => void;
+  currentView: 'hub' | 'admin' | 'profile' | 'shop';
+  onViewChange: (view: 'hub' | 'admin' | 'profile' | 'shop') => void;
   onLogout: () => void;
 }
 
