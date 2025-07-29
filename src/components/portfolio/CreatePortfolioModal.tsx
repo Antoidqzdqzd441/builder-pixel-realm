@@ -39,7 +39,7 @@ export const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
     e.preventDefault();
     
     if (userRole.credits < formData.duration) {
-      setError(`Vous n'avez pas assez de crédits. Il vous faut ${formData.duration} crédit(s) mais vous n'en avez que ${userRole.credits}.`);
+      setError(`Insufficient credits. Need ${formData.duration} credit(s) but you only have ${userRole.credits}.`);
       return;
     }
 
@@ -109,202 +109,159 @@ export const CreatePortfolioModal: React.FC<CreatePortfolioModalProps> = ({
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          transition={{ type: "spring", damping: 25, stiffness: 300 }}
-          className="bg-white/10 backdrop-blur-md rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-white/20"
+          className="bg-white/10 backdrop-blur-md rounded-lg max-w-md w-full p-6 border border-white/20"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="p-6">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">Publier mon Portfolio</h2>
-              <button
-                onClick={onClose}
-                className="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
+          {/* Header */}
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-bold text-white">Create Portfolio</h2>
+            <button
+              onClick={onClose}
+              className="w-6 h-6 bg-white/10 hover:bg-white/20 rounded flex items-center justify-center text-white transition-colors"
+            >
+              ✕
+            </button>
+          </div>
 
-            {/* Credits Info */}
-            <div className={`border rounded-lg p-4 mb-6 ${
-              userRole.credits === 0
-                ? 'bg-red-500/20 border-red-500/30'
-                : 'bg-purple-500/20 border-purple-500/30'
-            }`}>
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-white font-medium">
-                    {userRole.credits === 0 ? 'Aucun crédit disponible' : 'Vos crédits disponibles'}
-                  </h3>
-                  <p className={`text-sm ${
-                    userRole.credits === 0 ? 'text-red-300' : 'text-purple-300'
-                  }`}>
-                    {userRole.credits === 0
-                      ? 'Achetez des crédits dans la boutique pour publier !'
-                      : '1 crédit = 1 heure de visibilité sur le hub'
-                    }
-                  </p>
+          {/* Credits Info */}
+          <div className={`border rounded-md p-3 mb-4 ${
+            userRole.credits === 0 
+              ? 'bg-red-500/20 border-red-500/30' 
+              : 'bg-blue-500/10 border-blue-500/20'
+          }`}>
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-white text-sm font-medium">
+                  {userRole.credits === 0 ? 'No credits available' : 'Available credits'}
                 </div>
-                <div className="flex items-center space-x-3">
-                  <div className="text-2xl font-bold text-white">
-                    {userRole.credits} 💎
-                  </div>
-                  {userRole.credits === 0 && userRole.points >= 5 && (
-                    <button
-                      onClick={onClose}
-                      className="bg-yellow-600 hover:bg-yellow-700 text-white text-sm px-3 py-2 rounded-lg transition-colors"
-                    >
-                      🛒 Boutique
-                    </button>
-                  )}
+                <div className={`text-xs ${
+                  userRole.credits === 0 ? 'text-red-300' : 'text-blue-300'
+                }`}>
+                  {userRole.credits === 0 
+                    ? 'Buy credits in shop to publish!' 
+                    : '1 credit = 1 hour visibility'
+                  }
                 </div>
+              </div>
+              <div className="text-xl font-bold text-white">
+                {userRole.credits}
               </div>
             </div>
+          </div>
 
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-red-500/20 border border-red-500/30 rounded-lg p-3 mb-6"
-              >
-                <p className="text-red-200 text-sm">{error}</p>
-              </motion.div>
-            )}
+          {error && (
+            <div className="bg-red-500/20 border border-red-500/30 rounded-md p-2 mb-4">
+              <p className="text-red-200 text-sm">{error}</p>
+            </div>
+          )}
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Titre du portfolio *
-                </label>
-                <input
-                  type="text"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="Mon incroyable projet..."
-                  required
-                  maxLength={100}
-                />
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">
+                Title *
+              </label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white placeholder-gray-400 text-sm"
+                placeholder="Portfolio title..."
+                required
+                maxLength={100}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">
+                Description *
+              </label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows={3}
+                className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white placeholder-gray-400 resize-none text-sm"
+                placeholder="Describe your project..."
+                required
+                maxLength={300}
+              />
+              <div className="text-right text-xs text-gray-400 mt-1">
+                {formData.description.length}/300
               </div>
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Description *
-                </label>
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  rows={4}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-400 resize-none"
-                  placeholder="Décrivez votre projet, les techniques utilisées, votre inspiration..."
-                  required
-                  maxLength={500}
-                />
-                <div className="text-right text-xs text-gray-400 mt-1">
-                  {formData.description.length}/500 caractères
-                </div>
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">
+                Image URL *
+              </label>
+              <input
+                type="url"
+                name="imageUrl"
+                value={formData.imageUrl}
+                onChange={handleChange}
+                className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white placeholder-gray-400 text-sm"
+                placeholder="https://example.com/image.jpg"
+                required
+              />
+            </div>
 
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  URL de l'image *
-                </label>
-                <input
-                  type="url"
-                  name="imageUrl"
-                  value={formData.imageUrl}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="https://example.com/mon-image.jpg"
-                  required
-                />
-                <p className="text-xs text-gray-400 mt-1">
-                  Utilisez un service comme Imgur, Unsplash, ou votre propre hébergement
-                </p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Tags (facultatif)
+                <label className="block text-sm font-medium text-gray-300 mb-1">
+                  Tags
                 </label>
                 <input
                   type="text"
                   name="tags"
                   value={formData.tags}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-400"
-                  placeholder="design, illustration, photographie (séparés par des virgules)"
+                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white placeholder-gray-400 text-sm"
+                  placeholder="design, art"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Durée de visibilité *
+                <label className="block text-sm font-medium text-gray-300 mb-1">
+                  Duration *
                 </label>
                 <select
                   name="duration"
                   value={formData.duration}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white"
+                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white text-sm"
                   required
                 >
-                  <option value={1}>1 heure (1 crédit)</option>
-                  <option value={2}>2 heures (2 crédits)</option>
-                  <option value={4}>4 heures (4 crédits)</option>
-                  <option value={8}>8 heures (8 crédits)</option>
-                  <option value={12}>12 heures (12 crédits)</option>
-                  <option value={24}>24 heures (24 crédits)</option>
+                  <option value={1}>1h (1 credit)</option>
+                  <option value={2}>2h (2 credits)</option>
+                  <option value={4}>4h (4 credits)</option>
+                  <option value={8}>8h (8 credits)</option>
+                  <option value={12}>12h (12 credits)</option>
+                  <option value={24}>24h (24 credits)</option>
                 </select>
               </div>
+            </div>
 
-              {/* Preview */}
-              {formData.imageUrl && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Aperçu
-                  </label>
-                  <div className="bg-white/5 rounded-lg p-4">
-                    <img
-                      src={formData.imageUrl}
-                      alt="Preview"
-                      className="w-full h-48 object-cover rounded-lg mb-3"
-                      onError={(e) => {
-                        e.currentTarget.src = 'https://via.placeholder.com/400x200?text=Image+introuvable';
-                      }}
-                    />
-                    <h3 className="text-white font-medium mb-1">{formData.title || 'Titre du portfolio'}</h3>
-                    <p className="text-gray-300 text-sm">
-                      {formData.description || 'Description du portfolio...'}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* Submit */}
-              <div className="flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="px-6 py-3 text-gray-300 hover:text-white transition-colors"
-                >
-                  Annuler
-                </button>
-                
-                <button
-                  type="submit"
-                  disabled={loading || userRole.credits < formData.duration}
-                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:from-gray-600 disabled:to-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200"
-                >
-                  {loading ? 'Publication...' : `Publier (${formData.duration} crédit${formData.duration > 1 ? 's' : ''})`}
-                </button>
-              </div>
-            </form>
-          </div>
+            {/* Submit */}
+            <div className="flex items-center justify-between pt-2">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 text-gray-300 hover:text-white transition-colors text-sm"
+              >
+                Cancel
+              </button>
+              
+              <button
+                type="submit"
+                disabled={loading || userRole.credits < formData.duration}
+                className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded transition-colors text-sm"
+              >
+                {loading ? 'Publishing...' : `Publish (${formData.duration} credit${formData.duration > 1 ? 's' : ''})`}
+              </button>
+            </div>
+          </form>
         </motion.div>
       </motion.div>
     </AnimatePresence>
