@@ -48,11 +48,18 @@ export const PortfolioHub: React.FC<PortfolioHubProps> = ({ user, userRole }) =>
         ...doc.data()
       })) as Portfolio[];
 
-      // Filter expired portfolios on the client side
-      const activePortfolios = allPortfolios.filter(portfolio => {
-        const expiryTime = portfolio.expiresAt.toDate().getTime();
-        return expiryTime > now;
-      });
+      // Filter expired portfolios and sort by creation date on the client side
+      const activePortfolios = allPortfolios
+        .filter(portfolio => {
+          const expiryTime = portfolio.expiresAt.toDate().getTime();
+          return expiryTime > now;
+        })
+        .sort((a, b) => {
+          // Sort by creation date (newest first)
+          const aTime = a.createdAt.toDate().getTime();
+          const bTime = b.createdAt.toDate().getTime();
+          return bTime - aTime;
+        });
 
       setPortfolios(activePortfolios);
       setLoading(false);
