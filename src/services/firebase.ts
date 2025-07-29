@@ -4,12 +4,12 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyD1234567890",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "portfoliohub-b559c.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "portfoliohub-b559c",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "portfoliohub-b559c.appspot.com",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "123456789",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:123456789:web:abcdef123456"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyBX4W8V4H4jQ6K1HtY2sK9dL7xN3rE8mF0",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "systeme-39fb9.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "systeme-39fb9",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "systeme-39fb9.appspot.com",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "484851885756",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:484851885756:web:c8f5d2e4a6b9f1e2d4e5f6"
 };
 
 // Initialize Firebase
