@@ -134,56 +134,45 @@ export const PortfolioHub: React.FC<PortfolioHubProps> = ({ user, userRole }) =>
         </motion.div>
 
         {/* Action Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="flex flex-col lg:flex-row items-center justify-between mb-10 space-y-6 lg:space-y-0"
-        >
+        <div className="flex items-center justify-between mb-8">
           {/* Filters */}
-          <div className="flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-2xl p-2 border border-white/20">
+          <div className="flex items-center space-x-2">
             <button
               onClick={() => setFilter('active')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 ${
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-2 ${
                 filter === 'active'
-                  ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/25'
-                  : 'text-gray-300 hover:text-white hover:bg-white/10'
+                  ? 'bg-white/20 text-white'
+                  : 'text-gray-400 hover:text-white hover:bg-white/10'
               }`}
             >
-              <span className="text-emerald-400">🔥</span>
-              <span>Actifs</span>
-              <span className="bg-white/20 px-2 py-1 rounded-full text-xs">{stats.active}</span>
+              <span>Active</span>
+              <span className="bg-white/20 px-1.5 py-0.5 rounded text-xs">{stats.active}</span>
             </button>
-            
+
             <button
               onClick={() => setFilter('trending')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 ${
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-2 ${
                 filter === 'trending'
-                  ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/25'
-                  : 'text-gray-300 hover:text-white hover:bg-white/10'
+                  ? 'bg-white/20 text-white'
+                  : 'text-gray-400 hover:text-white hover:bg-white/10'
               }`}
             >
-              <span className="text-yellow-400">⭐</span>
-              <span>Tendances</span>
-              <span className="bg-white/20 px-2 py-1 rounded-full text-xs">{stats.trending}</span>
+              <span>Trending</span>
+              <span className="bg-white/20 px-1.5 py-0.5 rounded text-xs">{stats.trending}</span>
             </button>
           </div>
 
           {/* Create Button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <button
             onClick={() => setShowCreateModal(true)}
-            className="bg-gradient-to-r from-purple-600 via-purple-500 to-blue-600 hover:from-purple-500 hover:via-purple-400 hover:to-blue-500 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 flex items-center space-x-3 shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 border border-white/20"
+            className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md transition-colors flex items-center space-x-2"
           >
-            <div className="w-6 h-6 bg-white/20 rounded-lg flex items-center justify-center">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" />
-              </svg>
-            </div>
-            <span className="text-lg">Publier mon Portfolio</span>
-          </motion.button>
-        </motion.div>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            <span>Create Portfolio</span>
+          </button>
+        </div>
 
         {/* Portfolio Grid */}
         {portfolios.length === 0 ? (
