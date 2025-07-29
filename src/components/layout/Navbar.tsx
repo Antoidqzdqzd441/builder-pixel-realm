@@ -60,22 +60,12 @@ export const Navbar: React.FC<NavbarProps> = ({
       className="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-md border-b border-white/10"
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-sm font-bold text-white">P</span>
-            </div>
-            <h1 className="text-lg font-bold text-white">
-              PortfolioHub
-            </h1>
-          </div>
-
-          {/* Navigation */}
-          <div className="flex items-center space-x-1">
+        <div className="flex items-center justify-center h-16">
+          {/* Centered Navigation */}
+          <div className="flex items-center space-x-1 bg-white/10 rounded-lg p-1">
             <button
               onClick={() => onViewChange('hub')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${
                 currentView === 'hub'
                   ? 'bg-white/20 text-white'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
@@ -86,7 +76,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <button
               onClick={() => onViewChange('shop')}
-              className={`relative px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`relative px-6 py-2 rounded-md text-sm font-medium transition-colors ${
                 currentView === 'shop'
                   ? 'bg-white/20 text-white'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
@@ -101,7 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {(userRole.role === 'admin' || userRole.role === 'founder') && (
               <button
                 onClick={() => onViewChange('admin')}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${
                   currentView === 'admin'
                     ? 'bg-white/20 text-white'
                     : 'text-gray-300 hover:text-white hover:bg-white/10'
@@ -113,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <button
               onClick={() => onViewChange('profile')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${
                 currentView === 'profile'
                   ? 'bg-white/20 text-white'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
