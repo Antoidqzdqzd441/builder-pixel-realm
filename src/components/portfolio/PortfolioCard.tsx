@@ -63,16 +63,13 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
   return (
     <>
       <motion.div
-        whileHover={{ y: -8, scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className="group relative bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl rounded-2xl overflow-hidden border border-white/20 cursor-pointer shadow-2xl hover:shadow-3xl transition-all duration-500"
+        whileHover={{ y: -2, scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
+        className="group relative bg-white/5 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 cursor-pointer hover:bg-white/10 transition-all duration-300"
         onClick={() => setShowModal(true)}
       >
-        {/* Premium Glow Effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
         {/* Image Container */}
-        <div className="relative h-56 overflow-hidden">
+        <div className="relative h-40 overflow-hidden">
           {/* Loading Skeleton */}
           {!imageLoaded && (
             <div className="absolute inset-0 bg-gradient-to-br from-slate-700 via-slate-600 to-slate-700 animate-pulse" />
