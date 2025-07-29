@@ -63,20 +63,28 @@ export const PortfolioModal: React.FC<PortfolioModalProps> = ({
   useEffect(() => {
     if (!isOpen) return;
 
+    // Simplified query to avoid index requirements
     const q = query(
       collection(db, 'comments'),
-      where('portfolioId', '==', portfolio.id),
-      where('status', '==', 'approved'),
-      orderBy('createdAt', 'desc')
+      where('portfolioId', '==', portfolio.id)
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const commentsData = snapshot.docs.map(doc => ({
+      const allComments = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       })) as Comment[];
-      
-      setComments(commentsData);
+
+      // Filter approved comments and sort on client side
+      const approvedComments = allComments
+        .filter(comment => comment.status === 'approved')
+        .sort((a, b) => {
+          const aTime = a.createdAt?.toDate?.()?.getTime() || 0;
+          const bTime = b.createdAt?.toDate?.()?.getTime() || 0;
+          return bTime - aTime;
+        });
+
+      setComments(approvedComments);
     });
 
     return () => unsubscribe();
