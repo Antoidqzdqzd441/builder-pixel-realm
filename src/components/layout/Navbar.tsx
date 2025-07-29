@@ -72,71 +72,55 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-2xl p-2 border border-white/20">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+          <div className="flex items-center space-x-1">
+            <button
               onClick={() => onViewChange('hub')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 ${
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 currentView === 'hub'
-                  ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/25'
+                  ? 'bg-white/20 text-white'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
               }`}
             >
-              <span className="text-purple-400">🏠</span>
-              <span>Hub</span>
-            </motion.button>
+              Hub
+            </button>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={() => onViewChange('shop')}
-              className={`relative px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 ${
+              className={`relative px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 currentView === 'shop'
-                  ? 'bg-gradient-to-r from-yellow-600 to-orange-600 text-white shadow-lg shadow-yellow-500/25'
+                  ? 'bg-white/20 text-white'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
               }`}
             >
-              <span className="text-yellow-400">🛒</span>
-              <span>Boutique</span>
+              Shop
               {userRole.credits === 0 && userRole.points >= 5 && (
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full shadow-lg shadow-red-500/50"
-                />
+                <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full" />
               )}
-            </motion.button>
+            </button>
 
             {(userRole.role === 'admin' || userRole.role === 'founder') && (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <button
                 onClick={() => onViewChange('admin')}
-                className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 ${
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   currentView === 'admin'
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25'
+                    ? 'bg-white/20 text-white'
                     : 'text-gray-300 hover:text-white hover:bg-white/10'
                 }`}
               >
-                <span className="text-blue-400">⚙️</span>
-                <span>Admin</span>
-              </motion.button>
+                Admin
+              </button>
             )}
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={() => onViewChange('profile')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 ${
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 currentView === 'profile'
-                  ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg shadow-green-500/25'
+                  ? 'bg-white/20 text-white'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
               }`}
             >
-              <span className="text-green-400">👤</span>
-              <span>Profil</span>
-            </motion.button>
+              Profile
+            </button>
           </div>
 
           {/* User Info */}
