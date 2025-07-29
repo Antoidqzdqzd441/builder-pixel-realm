@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import { PortfolioHub } from './portfolio/PortfolioHub';
 import { Navbar } from './layout/Navbar';
 import { AdminPanel } from './admin/AdminPanel';
+import { Shop } from './shop/Shop';
 
 export const Dashboard: React.FC = () => {
   const { user, userRole, logout } = useAuth();
