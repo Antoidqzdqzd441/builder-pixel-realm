@@ -132,63 +132,52 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
 
           {/* Tags */}
           {portfolio.tags && portfolio.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-4">
-              {portfolio.tags.slice(0, 3).map((tag, index) => (
-                <motion.span
+            <div className="flex flex-wrap gap-1 mb-3">
+              {portfolio.tags.slice(0, 2).map((tag, index) => (
+                <span
                   key={index}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 text-xs px-3 py-1 rounded-full border border-purple-500/30 font-medium"
+                  className="bg-white/10 text-gray-300 text-xs px-2 py-1 rounded border border-white/20"
                 >
-                  #{tag}
-                </motion.span>
+                  {tag}
+                </span>
               ))}
-              {portfolio.tags.length > 3 && (
-                <span className="text-gray-400 text-xs px-3 py-1 bg-white/5 rounded-full border border-white/10">
-                  +{portfolio.tags.length - 3}
+              {portfolio.tags.length > 2 && (
+                <span className="text-gray-500 text-xs px-2 py-1">
+                  +{portfolio.tags.length - 2}
                 </span>
               )}
             </div>
           )}
 
           {/* Stats */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="flex items-center space-x-1 text-rose-400 hover:text-rose-300 transition-colors"
-              >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center space-x-3 text-gray-400">
+              <div className="flex items-center space-x-1">
+                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
                 </svg>
-                <span className="text-sm font-semibold">{portfolio.likes}</span>
-              </motion.div>
-              
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span>{portfolio.likes}</span>
+              </div>
+
+              <div className="flex items-center space-x-1">
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
-                <span className="text-sm font-semibold">{portfolio.views}</span>
-              </motion.div>
+                <span>{portfolio.views}</span>
+              </div>
             </div>
 
             {/* View Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-all duration-300 shadow-lg hover:shadow-purple-500/25"
+            <button
+              className="bg-white/10 hover:bg-white/20 text-white text-xs font-medium px-3 py-1 rounded border border-white/20 transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowModal(true);
               }}
             >
-              Découvrir
-            </motion.button>
+              View
+            </button>
           </div>
         </div>
 
