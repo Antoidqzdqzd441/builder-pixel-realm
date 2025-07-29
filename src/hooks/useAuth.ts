@@ -88,11 +88,17 @@ export const useAuth = () => {
 
   const signInWithGoogle = async () => {
     try {
-      const { user } = await signInWithPopup(auth, googleProvider);
-      
+      // Add a timeout to prevent hanging
+      const signInPromise = signInWithPopup(auth, googleProvider);
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Sign-in timeout')), 30000)
+      );
+
+      const { user } = await Promise.race([signInPromise, timeoutPromise]) as any;
+
       // Check if user document exists
       const userDoc = await getDoc(doc(db, 'users', user.uid));
-      
+
       if (!userDoc.exists()) {
         // Create user document for new Google users
         const userData: UserRole = {
@@ -104,15 +110,27 @@ export const useAuth = () => {
           photoURL: user.photoURL || '',
           createdAt: new Date()
         };
-        
+
         await setDoc(doc(db, 'users', user.uid), {
           ...userData,
           createdAt: serverTimestamp()
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error signing in with Google:', error);
-      throw error;
+
+      // Provide more specific error messages
+      if (error.code === 'auth/network-request-failed') {
+        throw new Error('Erreur de connexion réseau. Vérifiez votre connexion internet.');
+      } else if (error.code === 'auth/popup-closed-by-user') {
+        throw new Error('Connexion annulée par l\'utilisateur.');
+      } else if (error.code === 'auth/popup-blocked') {
+        throw new Error('Pop-up bloqué par le navigateur. Autorisez les pop-ups pour ce site.');
+      } else if (error.message === 'Sign-in timeout') {
+        throw new Error('Délai de connexion dépassé. Veuillez réessayer.');
+      } else {
+        throw new Error('Erreur lors de la connexion avec Google. Veuillez réessayer.');
+      }
     }
   };
 
