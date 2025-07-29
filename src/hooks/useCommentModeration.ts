@@ -84,6 +84,16 @@ export const useCommentModeration = () => {
         moderatedAt: serverTimestamp()
       });
 
+      // Award points if comment is approved
+      if (moderationResult.isApproved) {
+        // Get comment data to find author
+        const commentDoc = await getDoc(doc(db, 'comments', commentId));
+        if (commentDoc.exists()) {
+          const commentData = commentDoc.data();
+          await pointsSystem.awardCommentPoints(commentData.authorId);
+        }
+      }
+
     } catch (error) {
       console.error('Error in AI moderation:', error);
       
