@@ -24,7 +24,7 @@ export const Dashboard: React.FC = () => {
         onLogout={logout}
       />
       
-      <main className="pt-20">
+      <main className="pt-16">
         {currentView === 'hub' && <PortfolioHub user={user} userRole={userRole} />}
         {currentView === 'shop' && (
           <div className="container mx-auto px-4 py-8">
