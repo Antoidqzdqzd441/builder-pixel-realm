@@ -25,33 +25,30 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
     switch (role) {
       case 'founder':
         return {
-          gradient: 'from-yellow-400 via-yellow-500 to-amber-600',
-          textColor: 'text-yellow-100',
-          bgColor: 'bg-gradient-to-r from-yellow-500/20 to-amber-600/20',
-          borderColor: 'border-yellow-400/30',
-          icon: '👑',
-          title: 'Fondateur',
-          glow: 'shadow-yellow-500/25'
+          gradient: 'from-yellow-400 to-amber-500',
+          textColor: 'text-yellow-200',
+          bgColor: 'bg-yellow-500/10',
+          borderColor: 'border-yellow-400/20',
+          title: 'Founder',
+          dotColor: 'bg-yellow-400'
         };
       case 'admin':
         return {
-          gradient: 'from-blue-400 via-blue-500 to-indigo-600',
-          textColor: 'text-blue-100',
-          bgColor: 'bg-gradient-to-r from-blue-500/20 to-indigo-600/20',
-          borderColor: 'border-blue-400/30',
-          icon: '⚡',
+          gradient: 'from-blue-400 to-indigo-500',
+          textColor: 'text-blue-200',
+          bgColor: 'bg-blue-500/10',
+          borderColor: 'border-blue-400/20',
           title: 'Admin',
-          glow: 'shadow-blue-500/25'
+          dotColor: 'bg-blue-400'
         };
       default:
         return {
-          gradient: 'from-emerald-400 via-green-500 to-teal-600',
-          textColor: 'text-emerald-100',
-          bgColor: 'bg-gradient-to-r from-emerald-500/20 to-teal-600/20',
-          borderColor: 'border-emerald-400/30',
-          icon: '💎',
-          title: 'Membre',
-          glow: 'shadow-emerald-500/25'
+          gradient: 'from-slate-400 to-slate-500',
+          textColor: 'text-slate-200',
+          bgColor: 'bg-slate-500/10',
+          borderColor: 'border-slate-400/20',
+          title: 'Member',
+          dotColor: 'bg-slate-400'
         };
     }
   };
@@ -59,7 +56,7 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
   const roleDesign = getRoleDesign(portfolio.creatorRole);
 
   const formatTimeRemaining = (timeStr: string) => {
-    if (timeStr === 'Expiré') return '⏰ Expir��';
+    if (timeStr === 'Expiré') return '⏰ Expiré';
     return `⏳ ${timeStr}`;
   };
 
