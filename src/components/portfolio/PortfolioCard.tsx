@@ -19,91 +19,151 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
   currentUserRole
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
-  const getRoleColor = (role: string) => {
+  const getRoleDesign = (role: string) => {
     switch (role) {
       case 'founder':
-        return 'text-yellow-400 bg-yellow-400/20';
+        return {
+          gradient: 'from-yellow-400 via-yellow-500 to-amber-600',
+          textColor: 'text-yellow-100',
+          bgColor: 'bg-gradient-to-r from-yellow-500/20 to-amber-600/20',
+          borderColor: 'border-yellow-400/30',
+          icon: '👑',
+          title: 'Fondateur',
+          glow: 'shadow-yellow-500/25'
+        };
       case 'admin':
-        return 'text-blue-400 bg-blue-400/20';
+        return {
+          gradient: 'from-blue-400 via-blue-500 to-indigo-600',
+          textColor: 'text-blue-100',
+          bgColor: 'bg-gradient-to-r from-blue-500/20 to-indigo-600/20',
+          borderColor: 'border-blue-400/30',
+          icon: '⚡',
+          title: 'Admin',
+          glow: 'shadow-blue-500/25'
+        };
       default:
-        return 'text-green-400 bg-green-400/20';
+        return {
+          gradient: 'from-emerald-400 via-green-500 to-teal-600',
+          textColor: 'text-emerald-100',
+          bgColor: 'bg-gradient-to-r from-emerald-500/20 to-teal-600/20',
+          borderColor: 'border-emerald-400/30',
+          icon: '💎',
+          title: 'Membre',
+          glow: 'shadow-emerald-500/25'
+        };
     }
   };
 
-  const getRoleIcon = (role: string) => {
-    switch (role) {
-      case 'founder':
-        return '👑';
-      case 'admin':
-        return '🔵';
-      default:
-        return '🟢';
-    }
+  const roleDesign = getRoleDesign(portfolio.creatorRole);
+
+  const formatTimeRemaining = (timeStr: string) => {
+    if (timeStr === 'Expiré') return '⏰ Expir��';
+    return `⏳ ${timeStr}`;
   };
 
   return (
     <>
       <motion.div
-        whileHover={{ y: -5 }}
-        className="bg-white/10 backdrop-blur-md rounded-xl overflow-hidden border border-white/20 cursor-pointer"
+        whileHover={{ y: -8, scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className="group relative bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl rounded-2xl overflow-hidden border border-white/20 cursor-pointer shadow-2xl hover:shadow-3xl transition-all duration-500"
         onClick={() => setShowModal(true)}
       >
-        {/* Image */}
-        <div className="relative h-48 overflow-hidden">
+        {/* Premium Glow Effect */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        
+        {/* Image Container */}
+        <div className="relative h-56 overflow-hidden">
+          {/* Loading Skeleton */}
+          {!imageLoaded && (
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-700 via-slate-600 to-slate-700 animate-pulse" />
+          )}
+          
           <img
             src={portfolio.imageUrl}
             alt={portfolio.title}
-            className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+            onLoad={() => setImageLoaded(true)}
+            className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-110 ${
+              imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
           />
           
-          {/* Timer Overlay */}
-          <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-sm rounded-lg px-2 py-1">
-            <div className="text-white text-sm font-medium">{remainingTime}</div>
-          </div>
-
-          {/* Creator Role Badge */}
-          <div className="absolute top-3 left-3">
-            <div className={`flex items-center space-x-1 px-2 py-1 rounded-lg ${getRoleColor(portfolio.creatorRole)}`}>
-              <span className="text-xs">{getRoleIcon(portfolio.creatorRole)}</span>
-              <span className="text-xs font-medium capitalize">{portfolio.creatorRole}</span>
+          {/* Image Overlay Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          
+          {/* Timer Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm rounded-xl px-3 py-2 border border-white/20"
+          >
+            <div className="text-white text-sm font-semibold flex items-center space-x-1">
+              <span className="text-xs">⏱️</span>
+              <span>{formatTimeRemaining(remainingTime)}</span>
             </div>
-          </div>
+          </motion.div>
+
+          {/* Role Badge */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1 }}
+            className="absolute top-4 left-4"
+          >
+            <div className={`${roleDesign.bgColor} ${roleDesign.borderColor} border backdrop-blur-sm rounded-xl px-3 py-2 ${roleDesign.glow} shadow-lg`}>
+              <div className={`flex items-center space-x-2 ${roleDesign.textColor}`}>
+                <span className="text-sm">{roleDesign.icon}</span>
+                <span className="text-xs font-bold uppercase tracking-wider">{roleDesign.title}</span>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
         {/* Content */}
-        <div className="p-4">
-          <h3 className="text-lg font-semibold text-white mb-2 line-clamp-1">
+        <div className="p-6 relative">
+          {/* Title */}
+          <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 leading-tight group-hover:text-purple-300 transition-colors duration-300">
             {portfolio.title}
           </h3>
           
-          <p className="text-gray-300 text-sm mb-3 line-clamp-2">
+          {/* Description */}
+          <p className="text-gray-300 text-sm mb-4 line-clamp-3 leading-relaxed">
             {portfolio.description}
           </p>
 
           {/* Creator Info */}
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center space-x-2">
-              <div className="w-6 h-6 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                {portfolio.creatorName.charAt(0).toUpperCase()}
+          <div className="flex items-center space-x-3 mb-4">
+            <div className={`w-12 h-12 bg-gradient-to-r ${roleDesign.gradient} rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
+              {portfolio.creatorName.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <div className="text-white font-semibold text-sm">{portfolio.creatorName}</div>
+              <div className={`text-xs ${roleDesign.textColor} flex items-center space-x-1`}>
+                <span>{roleDesign.icon}</span>
+                <span className="font-medium">{roleDesign.title}</span>
               </div>
-              <span className="text-sm text-gray-300">{portfolio.creatorName}</span>
             </div>
           </div>
 
           {/* Tags */}
           {portfolio.tags && portfolio.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-3">
+            <div className="flex flex-wrap gap-2 mb-4">
               {portfolio.tags.slice(0, 3).map((tag, index) => (
-                <span
+                <motion.span
                   key={index}
-                  className="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded-full"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3 + index * 0.1 }}
+                  className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 text-xs px-3 py-1 rounded-full border border-purple-500/30 font-medium"
                 >
-                  {tag}
-                </span>
+                  #{tag}
+                </motion.span>
               ))}
               {portfolio.tags.length > 3 && (
-                <span className="text-gray-400 text-xs px-2 py-1">
+                <span className="text-gray-400 text-xs px-3 py-1 bg-white/5 rounded-full border border-white/10">
                   +{portfolio.tags.length - 3}
                 </span>
               )}
@@ -111,25 +171,47 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
           )}
 
           {/* Stats */}
-          <div className="flex items-center justify-between text-sm text-gray-400">
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center space-x-1">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                className="flex items-center space-x-1 text-rose-400 hover:text-rose-300 transition-colors"
+              >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
                 </svg>
-                <span>{portfolio.likes}</span>
-              </div>
+                <span className="text-sm font-semibold">{portfolio.likes}</span>
+              </motion.div>
               
-              <div className="flex items-center space-x-1">
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors"
+              >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
-                <span>{portfolio.views}</span>
-              </div>
+                <span className="text-sm font-semibold">{portfolio.views}</span>
+              </motion.div>
             </div>
+
+            {/* View Button */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-all duration-300 shadow-lg hover:shadow-purple-500/25"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowModal(true);
+              }}
+            >
+              Découvrir
+            </motion.button>
           </div>
         </div>
+
+        {/* Hover Effect Border */}
+        <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-purple-500/30 transition-all duration-300 pointer-events-none" />
       </motion.div>
 
       {/* Portfolio Modal */}
