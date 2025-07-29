@@ -6,6 +6,7 @@ import { collection, query, orderBy, onSnapshot, doc, updateDoc, getDocs, where 
 import { db } from '../../services/firebase';
 import { UserManagement } from './UserManagement';
 import { PortfolioManagement } from './PortfolioManagement';
+import { PointsManagement } from './PointsManagement';
 import { MaintenanceMode } from './MaintenanceMode';
 
 interface AdminPanelProps {
