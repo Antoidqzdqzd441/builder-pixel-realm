@@ -31,12 +31,24 @@ export const Login: React.FC<LoginProps> = ({ onToggleMode }) => {
   const handleGoogleLogin = async () => {
     setLoading(true);
     setError('');
-    
+
     try {
       await signInWithGoogle();
     } catch (error: any) {
-      setError(error.message);
-    } finally {
+      console.log('Popup failed, trying redirect method:', error.message);
+
+      // If popup fails, try redirect method
+      if (error.message.includes('Pop-up') || error.message.includes('réseau')) {
+        try {
+          await signInWithGoogleRedirect();
+          // Don't set loading to false here, as redirect will reload the page
+          return;
+        } catch (redirectError: any) {
+          setError('Erreur de connexion Google. Vérifiez votre connexion internet.');
+        }
+      } else {
+        setError(error.message);
+      }
       setLoading(false);
     }
   };
