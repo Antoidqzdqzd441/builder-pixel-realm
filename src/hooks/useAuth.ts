@@ -174,11 +174,22 @@ export const useAuth = () => {
     }
   };
 
+  const signInWithGoogleRedirect = async () => {
+    try {
+      await signInWithRedirect(auth, googleProvider);
+      // The result will be handled in the useEffect above
+    } catch (error: any) {
+      console.error('Error signing in with Google redirect:', error);
+      throw new Error('Erreur lors de la connexion avec Google. Veuillez réessayer.');
+    }
+  };
+
   return {
     ...authState,
     signInWithEmail,
     signUpWithEmail,
     signInWithGoogle,
+    signInWithGoogleRedirect,
     logout
   };
 };
