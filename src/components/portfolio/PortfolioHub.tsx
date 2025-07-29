@@ -176,39 +176,18 @@ export const PortfolioHub: React.FC<PortfolioHubProps> = ({ user, userRole }) =>
 
         {/* Portfolio Grid */}
         {portfolios.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="text-center py-20"
-          >
-            <motion.div
-              animate={{ 
-                scale: [1, 1.1, 1],
-                rotate: [0, 5, -5, 0]
-              }}
-              transition={{ 
-                duration: 4, 
-                repeat: Infinity,
-                repeatType: "reverse"
-              }}
-              className="text-8xl mb-8"
-            >
-              🎨
-            </motion.div>
-            <h3 className="text-3xl font-bold text-white mb-4">Aucun portfolio actif</h3>
-            <p className="text-xl text-gray-400 mb-8 max-w-md mx-auto">
-              Soyez le premier à partager votre créativité avec notre communauté !
+          <div className="text-center py-16">
+            <h3 className="text-xl font-semibold text-white mb-2">No active portfolios</h3>
+            <p className="text-gray-400 mb-6">
+              Be the first to share your creativity with our community!
             </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={() => setShowCreateModal(true)}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-4 px-10 rounded-2xl transition-all duration-300 shadow-2xl shadow-purple-500/25"
+              className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-6 rounded-md transition-colors"
             >
-              🚀 Créer mon Premier Portfolio
-            </motion.button>
-          </motion.div>
+              Create First Portfolio
+            </button>
+          </div>
         ) : (
           <motion.div
             initial={{ opacity: 0 }}
