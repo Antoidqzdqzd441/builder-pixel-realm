@@ -8,7 +8,7 @@ import { Shop } from './shop/Shop';
 
 export const Dashboard: React.FC = () => {
   const { user, userRole, logout } = useAuth();
-  const [currentView, setCurrentView] = React.useState<'hub' | 'admin' | 'profile'>('hub');
+  const [currentView, setCurrentView] = React.useState<'hub' | 'admin' | 'profile' | 'shop'>('hub');
 
   if (!user || !userRole) {
     return null;
