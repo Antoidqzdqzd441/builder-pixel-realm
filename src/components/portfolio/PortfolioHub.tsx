@@ -35,11 +35,10 @@ export const PortfolioHub: React.FC<PortfolioHubProps> = ({ user, userRole }) =>
   const [filter, setFilter] = useState<'all' | 'active' | 'trending'>('active');
 
   useEffect(() => {
-    // Simplified query to avoid index requirements
+    // Simplified query to avoid index requirements - no orderBy to prevent index issues
     const q = query(
       collection(db, 'portfolios'),
-      where('status', '==', 'active'),
-      orderBy('createdAt', 'desc')
+      where('status', '==', 'active')
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
