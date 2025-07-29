@@ -121,22 +121,15 @@ export const PortfolioHub: React.FC<PortfolioHubProps> = ({ user, userRole }) =>
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
       <div className="container mx-auto px-4 py-8">
-        {/* Hero Header */}
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="mb-8"
         >
-          <div className="relative inline-block mb-6">
-            <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent mb-4">
-              Hub Créatif
-            </h1>
-            <div className="absolute -inset-4 bg-gradient-to-r from-purple-600/20 to-blue-600/20 blur-2xl -z-10" />
-          </div>
-          
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Découvrez les créations exceptionnelles de notre communauté d'artistes talentueux
+          <h1 className="text-3xl font-bold text-white mb-2">Creative Hub</h1>
+          <p className="text-gray-400">
+            Discover exceptional creations from our talented community
           </p>
         </motion.div>
 
