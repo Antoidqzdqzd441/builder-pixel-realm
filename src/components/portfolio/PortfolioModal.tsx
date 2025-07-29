@@ -84,11 +84,17 @@ export const PortfolioModal: React.FC<PortfolioModalProps> = ({
 
   const handleLike = async () => {
     if (isLiked) return;
-    
+
     try {
       await updateDoc(doc(db, 'portfolios', portfolio.id), {
         likes: increment(1)
       });
+
+      // Award points to portfolio creator for receiving a like
+      if (portfolio.creatorId !== currentUser.uid) {
+        await pointsSystem.awardLikePoints(portfolio.creatorId);
+      }
+
       setIsLiked(true);
     } catch (error) {
       console.error('Error liking portfolio:', error);
