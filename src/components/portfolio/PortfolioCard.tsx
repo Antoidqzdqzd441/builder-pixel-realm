@@ -180,9 +180,6 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
             </button>
           </div>
         </div>
-
-        {/* Hover Effect Border */}
-        <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-purple-500/30 transition-all duration-300 pointer-events-none" />
       </motion.div>
 
       {/* Portfolio Modal */}
