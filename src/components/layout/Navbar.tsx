@@ -71,7 +71,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <button
               onClick={() => onViewChange('shop')}
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2 ${
+              className={`relative px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2 ${
                 currentView === 'shop'
                   ? 'bg-yellow-600 text-white'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
@@ -79,6 +79,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <span>🛒</span>
               <span>Boutique</span>
+              {userRole.credits === 0 && userRole.points >= 5 && (
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+              )}
             </button>
 
             {(userRole.role === 'admin' || userRole.role === 'founder') && (
