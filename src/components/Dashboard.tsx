@@ -26,6 +26,11 @@ export const Dashboard: React.FC = () => {
       
       <main className="pt-20">
         {currentView === 'hub' && <PortfolioHub user={user} userRole={userRole} />}
+        {currentView === 'shop' && (
+          <div className="container mx-auto px-4 py-8">
+            <Shop user={user} userRole={userRole} />
+          </div>
+        )}
         {currentView === 'admin' && (userRole.role === 'admin' || userRole.role === 'founder') && (
           <AdminPanel user={user} userRole={userRole} />
         )}
