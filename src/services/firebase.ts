@@ -23,4 +23,13 @@ export const storage = getStorage(app);
 // Google Auth Provider
 export const googleProvider = new GoogleAuthProvider();
 
+// Configure Google provider
+googleProvider.setCustomParameters({
+  prompt: 'select_account'
+});
+
+// Add scopes for profile information
+googleProvider.addScope('profile');
+googleProvider.addScope('email');
+
 export default app;
