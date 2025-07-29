@@ -151,7 +151,9 @@ export const useAuth = () => {
       console.error('Error signing in with Google:', error);
 
       // Provide more specific error messages
-      if (error.code === 'auth/network-request-failed') {
+      if (error.code === 'auth/unauthorized-domain') {
+        throw new Error('Domaine non autorisé. En mode développement, utilisez localhost ou configurez le domaine dans Firebase Console.');
+      } else if (error.code === 'auth/network-request-failed') {
         throw new Error('Erreur de connexion réseau. Vérifiez votre connexion internet.');
       } else if (error.code === 'auth/popup-closed-by-user') {
         throw new Error('Connexion annulée par l\'utilisateur.');
